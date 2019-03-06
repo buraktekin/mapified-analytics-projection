@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { compose, withProps, withStateHandlers } from "recompose"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, KmlLayer, TrafficLayer } from 'react-google-maps'
 const styles = require("../assets/theme/gmaps_theme.json");
-const { compose, withProps, withStateHandlers } = require("recompose");
 
 // .ENV initialize
 require('dotenv').config('.env');
@@ -9,7 +9,6 @@ require('dotenv').config('.env');
 // Import custom icon for map marker
 // You can use this if you need to support IE11 and lower.
 // const mapMarker = require('./GoogleMapMarker.svg')
-
 
 const GMap = 
   compose(
@@ -33,9 +32,35 @@ const GMap =
     <GoogleMap
       defaultZoom={4}
       defaultCenter={props.center}
-      defaultOptions={{ styles: styles }}
+      defaultOptions={{ 
+        styles: styles,
+        mapTypeControl: false,
+        zoomControl: false,
+        scaleControl: false
+      }}
     >
+    <TrafficLayer autoUpdate />
     </GoogleMap>
   );
+
+  class GMapComponent extends Component {
+    state: {
+      markers: []
+    }
+
+    componentDidMount() { 
+      // Add some statements here
+    }
+
+    handleClick() {
+      // add some statements here
+    }
+
+    render() {
+      return(
+        <GMap></GMap>
+      )
+    }
+  }
 
 export default GMap;
